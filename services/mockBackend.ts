@@ -124,21 +124,18 @@ export const createAgent = async (data: Omit<Agent, 'id' | 'createdAt'>): Promis
 
 export const deleteAgent = async (id: string): Promise<void> => {
   await new Promise(resolve => setTimeout(resolve, 500));
-  let agents: Agent[] = await getAgents();
-  let visits: Visit[] = await getVisits();
+  
+  // Get current state
+  let agents: Agent[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.AGENTS) || '[]');
+  let visits: Visit[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.VISITS) || '[]');
 
   // 1. Remove the agent
-  agents = agents.filter(a => a.id !== id);
-  localStorage.setItem(STORAGE_KEYS.AGENTS, JSON.stringify(agents));
+  const updatedAgents = agents.filter(a => a.id !== id);
+  localStorage.setItem(STORAGE_KEYS.AGENTS, JSON.stringify(updatedAgents));
 
   // 2. Cascade delete: Remove all visits by this agent
-  const initialVisitCount = visits.length;
-  visits = visits.filter(v => v.agentId !== id);
-  
-  // Only update visits if changes occurred
-  if (visits.length !== initialVisitCount) {
-    localStorage.setItem(STORAGE_KEYS.VISITS, JSON.stringify(visits));
-  }
+  const updatedVisits = visits.filter(v => v.agentId !== id);
+  localStorage.setItem(STORAGE_KEYS.VISITS, JSON.stringify(updatedVisits));
 };
 
 // --- Visit Routes Simulation ---

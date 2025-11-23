@@ -1,0 +1,9 @@
+{
+  "name": "Visit Tracker System",
+  "description": "A comprehensive system for tracking agent visits, managing agents, and generating reports with a mock backend implementation.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

@@ -54,7 +54,7 @@ export const DashboardPage = () => {
   const generateAIInsight = async () => {
     // This is where we integrate Gemini
     if (!process.env.API_KEY) {
-      setInsight("مفتاح API غير موجود. تحليل تجريبي: زادت الزيارات بنسبة 15% هذا الأسبوع. المندوب أحمد علي هو الأفضل أداءً.");
+      setInsight("مفتاح API غير موجود. تحليل تجريبي: زادت زيارات المناديب بنسبة 15% هذا الأسبوع. شركة فايزر هي الأكثر نشاطاً.");
       return;
     }
 
@@ -63,7 +63,7 @@ export const DashboardPage = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const visits = await getVisits();
       // Simulating a summary prompt asking for Arabic response
-      const prompt = `قم بتحليل ملاحظات الزيارات التالية وقدم ملخص استراتيجي قصير (جملة واحدة) لمدير المبيعات باللغة العربية: ${JSON.stringify(visits.slice(0, 5).map(v => v.notes))}`;
+      const prompt = `أنت مساعد ذكي لمدير عيادة/صيدلية. قم بتحليل ملاحظات زيارات مناديب الشركات التالية وقدم ملخص استراتيجي قصير (جملة واحدة) حول أهم العروض أو المنتجات المعروضة: ${JSON.stringify(visits.slice(0, 5).map(v => v.notes))}`;
       
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
@@ -89,7 +89,7 @@ export const DashboardPage = () => {
           className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
         >
           <Activity size={16} />
-          {analyzing ? 'جاري التحليل...' : 'تحليل الذكاء الاصطناعي'}
+          {analyzing ? 'جاري تحليل العروض...' : 'تحليل الزيارات بالذكاء الاصطناعي'}
         </button>
       </div>
 
@@ -104,15 +104,15 @@ export const DashboardPage = () => {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="إجمالي الزيارات" value={stats?.totalVisits} icon={MapPin} color="bg-blue-500" />
+        <StatCard title="إجمالي الزيارات الواردة" value={stats?.totalVisits} icon={MapPin} color="bg-blue-500" />
         <StatCard title="زيارات اليوم" value={stats?.visitsToday} icon={Calendar} color="bg-green-500" />
-        <StatCard title="إجمالي المندوبين" value={stats?.totalAgents} icon={Users} color="bg-indigo-500" />
-        <StatCard title="المندوبين النشطين" value={stats?.activeAgents} icon={Activity} color="bg-orange-500" />
+        <StatCard title="المناديب المسجلين" value={stats?.totalAgents} icon={Users} color="bg-indigo-500" />
+        <StatCard title="مناديب نشطين" value={stats?.activeAgents} icon={Activity} color="bg-orange-500" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-          <h3 className="text-lg font-bold text-slate-800 mb-4">اتجاهات الزيارات (آخر 7 أيام)</h3>
+          <h3 className="text-lg font-bold text-slate-800 mb-4">نشاط الزيارات (آخر 7 أيام)</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData}>
@@ -130,7 +130,7 @@ export const DashboardPage = () => {
         </div>
 
         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-          <h3 className="text-lg font-bold text-slate-800 mb-4">مؤشر الأداء</h3>
+          <h3 className="text-lg font-bold text-slate-800 mb-4">معدل الاستقبال</h3>
            <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>

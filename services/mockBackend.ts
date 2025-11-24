@@ -19,20 +19,22 @@ const initializeData = () => {
     const mockAgents: Agent[] = [
       {
         id: '1',
-        code: 'AGT-1001',
-        name: 'أحمد علي',
-        company: 'شركة المبيعات المتحدة',
-        phone: '0123456789',
+        code: 'REP-1001',
+        name: 'د. أحمد علي',
+        company: 'فايزر (Pfizer)',
+        products: 'ليبيتور، نورفاسك، زانكس',
+        phone: '01012345678',
         password: 'password123',
         status: AgentStatus.ACTIVE,
         createdAt: new Date().toISOString()
       },
       {
         id: '2',
-        code: 'AGT-1002',
-        name: 'سارة سمير',
-        company: 'شركة المبيعات المتحدة',
-        phone: '0987654321',
+        code: 'REP-1002',
+        name: 'د. سارة سمير',
+        company: 'نوفارتس (Novartis)',
+        products: 'فولتارين، كاتافلام، ديوفان',
+        phone: '01123456789',
         password: 'password123',
         status: AgentStatus.INACTIVE,
         createdAt: new Date().toISOString()
@@ -46,12 +48,13 @@ const initializeData = () => {
       {
         id: '101',
         agentId: '1',
-        agentName: 'أحمد علي',
-        companyVisited: 'الحلول التقنية',
+        agentName: 'د. أحمد علي',
+        agentCompany: 'فايزر (Pfizer)',
+        agentPhone: '01012345678',
         visitDate: new Date().toISOString(),
-        notes: 'الاجتماع التعريفي سار بشكل جيد. العميل مهتم بخطة الربع الثالث.',
+        notes: 'تم عرض أدوية جديدة للضغط. المندوب قدم عينات مجانية وطلب تحديد موعد للشهر القادم.',
         createdAt: new Date().toISOString(),
-        location: { lat: 25.2048, lng: 55.2708 }
+        location: { lat: 30.0444, lng: 31.2357 }
       }
     ];
     localStorage.setItem(STORAGE_KEYS.VISITS, JSON.stringify(mockVisits));
@@ -68,7 +71,7 @@ export const login = async (username: string, password: string): Promise<AuthRes
 
   // Admin Login (Hardcoded for demo)
   if (username === 'admin' && password === 'admin') {
-    const user: User = { id: 'admin', username: 'admin', name: 'مدير النظام', role: UserRole.ADMIN };
+    const user: User = { id: 'admin', username: 'admin', name: 'د. المدير', role: UserRole.ADMIN };
     localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(user));
     return { token: 'mock-jwt-admin-token', user };
   }

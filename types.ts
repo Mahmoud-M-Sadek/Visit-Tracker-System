@@ -19,7 +19,8 @@ export interface Agent {
   id: string;
   code: string; // Unique ID
   name: string;
-  company: string;
+  company: string; // Pharmaceutical Company
+  products: string; // New: Drugs/Products they represent
   phone: string;
   password?: string; // Only used for auth check, usually hashed
   status: AgentStatus;
@@ -30,9 +31,10 @@ export interface Visit {
   id: string;
   agentId: string;
   agentName: string;
-  companyVisited: string;
+  agentCompany: string; // New: The company the agent represents
+  agentPhone: string;   // New: The agent's phone number
   visitDate: string; // ISO String
-  notes: string;
+  notes: string; // The report written by the doctor/admin
   photoUrl?: string; // Base64
   location?: {
     lat: number;
